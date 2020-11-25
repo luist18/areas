@@ -161,6 +161,8 @@ class Tester:
 
             tests_list = []
 
+            score = 0
+
             for inp, out, weight in zip(inputs, outputs, weights):
                 # Try to compile and run submission for a specific input case
                 # If it fails, grade with zero and move to next subroutine
@@ -193,6 +195,8 @@ class Tester:
 
                 if test_passed:
                     passed = passed + 1
+
+                    score = score + weight
                 else:
                     all_tests_passed = False
 
@@ -208,6 +212,7 @@ class Tester:
             subroutine_object['ok'] = compiled and all_tests_passed
             subroutine_object['passed_count'] = passed
             subroutine_object['test_count'] = len(outputs)
+            subroutine_object['score'] = score
             subroutine_object['tests'] = tests_list
 
             subroutine_list.append(subroutine_object)
@@ -215,3 +220,5 @@ class Tester:
         json.dump(subroutine_list, feedback_file, indent=4)
         # Remove temporary auxiliary folder and write final scores
         delete_dir(self.temp_grading_folder)
+
+        return subroutine_list

@@ -73,5 +73,23 @@ if __name__ == "__main__":
     evaluator = Evaluator(program_args, subroutine_objs, [
                           sr.build_c_file() for sr in subroutine_objs.values()], test_suite)
 
+    result = []
+
     for student_submission in args['sm']:
         submission = evaluator.grade_submission(student_submission)
+
+        filename = match(
+            r'(?:.+\/)*(.*)?.*\.zip', student_submission, flags=IGNORECASE).group(1)
+
+        subroutines_result = [{
+            'name': subroutine['name'],
+            'score': subroutine['score']
+        } for subroutine in submission]
+
+        result.append({
+            'submission_name': filename,
+            'subroutines': subroutines_result
+        })
+
+    file = open('{}/result.json'.format(program_args['ffd']), 'w')
+    json.dump(result, file, indent=4)
