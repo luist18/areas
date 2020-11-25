@@ -22,6 +22,8 @@ class Tester:
                              for name in self.subroutines.keys()]
         self.test_inputs = [list(map(lambda test: test['inputs'], test_suite[name]))
                             for name in self.subroutines.keys()]
+        self.test_weights = [list(map(lambda test: test['weight'], test_suite[name]))
+                             for name in self.subroutines.keys()]
 
         if os.path.exists(self.feedback_folder):
             delete_dir(self.feedback_folder)
@@ -140,7 +142,7 @@ class Tester:
 
         subroutine_list = []
 
-        for subroutine, template_file, inputs, outputs in zip(self.subroutines.keys(), self.template_files, self.test_inputs, self.test_outputs):
+        for subroutine, template_file, inputs, outputs, weights in zip(self.subroutines.keys(), self.template_files, self.test_inputs, self.test_outputs, self.test_weights):
             # Subroutine output file template
             output_file = '{}/{}'.format(self.temp_grading_folder,
                                          subroutine.lower())
@@ -159,11 +161,13 @@ class Tester:
 
             tests_list = []
 
-            for inp, out in zip(inputs, outputs):
+            for inp, out, weight in zip(inputs, outputs, weights):
                 # Try to compile and run submission for a specific input case
                 # If it fails, grade with zero and move to next subroutine
 
                 test_object = {}
+
+                test_object['weight'] = weight
 
                 try:
                     self.compile_and_run(

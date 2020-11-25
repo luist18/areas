@@ -1,10 +1,12 @@
 from yaml import safe_load, YAMLError
 from argparse import ArgumentParser
 from sys import exit
+from re import match, search, IGNORECASE
 from subroutines.numeric_subroutine import numeric_subroutine as Numeric
 from subroutines.array_subroutine import array_subroutine as Array
 from subroutines.mixed_subroutine import mixed_subroutine as Mixed
 from subroutines.void_subroutine import void_subroutine as Void
+import json
 
 from tester import Tester as Evaluator
 
@@ -72,4 +74,4 @@ if __name__ == "__main__":
                           sr.build_c_file() for sr in subroutine_objs.values()], test_suite)
 
     for student_submission in args['sm']:
-        evaluator.grade_submission(student_submission)
+        submission = evaluator.grade_submission(student_submission)
