@@ -10,6 +10,8 @@ class array_parameter(parameter):
             self.printf_format = 'c' 
         elif element_type == 'int':
             self.printf_format = 'd'
+        elif element_type == 'long':
+            self.printf_format = 'ld'
         else:
             self.printf_format = 'f'
         self.is_output = is_output
