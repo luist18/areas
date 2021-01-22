@@ -1,11 +1,14 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+apt-get update
 apt-get install -y git
 
-sh requirements/system_requirements.sh
+sh $DIR/requirements/system_requirements.sh
 
-pip3 install -U -r /requirements/py_requirements.txt
+pip3 install -U -r $DIR/requirements/py_requirements.txt
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+export MAST_PATH=$DIR/src/main.py
 
 echo 'alias mast="python3 '$DIR'/src/main.py"' >> ~/.bashrc

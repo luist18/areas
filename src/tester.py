@@ -217,7 +217,7 @@ class Tester:
 
             subroutine_list.append(subroutine_object)
 
-        json.dump(subroutine_list, feedback_file, indent=4)
+        json.dump({'submission_name': filename, 'subroutines': subroutine_list}, feedback_file, indent=4)
         # Remove temporary auxiliary folder and write final scores
         delete_dir(self.temp_grading_folder)
 
