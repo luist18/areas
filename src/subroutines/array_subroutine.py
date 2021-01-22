@@ -45,7 +45,7 @@ class array_subroutine(subroutine):
                 if(len(exp) != len(re_arr)):
                     return False
                 for exp_el, re_el in zip(exp, re_arr):
-                    if arr_type == 'int' and exp_el != re_el:
+                    if (arr_type == 'int' or arr_type == 'long') and exp_el != re_el:
                         return False
                     elif abs(exp_el-re_el) > precision:
                         return False

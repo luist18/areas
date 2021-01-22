@@ -4,12 +4,18 @@ from parameters.numeric_parameter import numeric_parameter as Numeric
 from parameters.array_parameter import array_parameter as Array
 
 class numeric_subroutine(subroutine):
-    """Subroutine that returns a single numeric value (e.g., int, float, double)"""
+    """Subroutine that returns a single numeric value (e.g., int, long, float, double)"""
 
     def __init__(self, name, parameters, return_type):
         super().__init__(name, parameters)
         self.c_function_return = return_type
-        self.printf_format = 'd' if return_type == 'int' else 'f'
+
+        if return_type == 'int':
+            self.printf_format = 'd'
+        elif return_type == 'long':
+            self.printf_format = 'ld'
+        else:
+            self.printf_format = 'f'
 
     def get_nr_outputs(self):
         return 0
@@ -30,7 +36,7 @@ class numeric_subroutine(subroutine):
     def compare_outputs(self, expected, real, precision):
         if(len(real) != len(expected)):
             return False
-        if self.c_function_return == 'int':
+        if self.c_function_return == 'int' or self.c_function_return == 'long':
             return expected[0] == int(real[0])
         else:
             return abs(expected[0] - float(real[0])) <= precision

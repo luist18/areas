@@ -13,6 +13,8 @@ class mixed_subroutine(subroutine):
         self.c_function_return = number_return_type
         if number_return_type == 'int':
             self.printf_format = 'd'
+        elif number_return_type == 'long':
+            self.printf_format = 'ld'
         elif number_return_type == 'float' or number_return_type == 'double':
             self.printf_format = 'f'
         elif number_return_type == 'char':
@@ -43,7 +45,7 @@ class mixed_subroutine(subroutine):
     def compare_outputs(self, expected, real, precision):
         if(len(expected) != len(real)):
             return False
-        if self.printf_format == 'd' and expected[0] != int(real[0]):
+        if (self.printf_format == 'd' or self.printf_format == 'ld') and expected[0] != int(real[0]):
             return False
         elif self.printf_format == 'c':
             if expected[0] is None and real[0].rstrip('\x00') != "" and real[0] != '0':
@@ -63,7 +65,7 @@ class mixed_subroutine(subroutine):
                 if(len(exp) != len(re_arr)):
                     return False
                 for exp_el, re_el in zip(exp, re_arr):
-                    if arr_type == 'int' and exp_el != re_el:
+                    if (arr_type == 'int' or arr_type == 'long') and exp_el != re_el:
                         return False
                     elif abs(exp_el-re_el) > precision:
                         return False
