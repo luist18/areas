@@ -15,14 +15,8 @@ COPY src /src
 # Ensure packages are up to date
 RUN apt-get update
 
-# Install system dependencies
-RUN sh /requirements/system_requirements.sh
-
-# Install Python dependencies
-RUN pip3 install -U -r /requirements/py_requirements.txt
-
-# Create alias for tool
-RUN echo 'alias mast="python3 /src/main.py"' >> ~/.bashrc
+# Install
+RUN source ./install.sh
 
 # Default command
 CMD /bin/bash

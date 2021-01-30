@@ -1,6 +1,7 @@
 from zipfile import ZipFile as unzip
 from re import match, search, IGNORECASE
 from shutil import rmtree as delete_dir
+from decimal import Decimal
 import os
 import subprocess
 import json
@@ -196,7 +197,7 @@ class Tester:
                 if test_passed:
                     passed = passed + 1
 
-                    score = score + weight
+                    score = score + Decimal(weight)
                 else:
                     all_tests_passed = False
 
@@ -212,7 +213,7 @@ class Tester:
             subroutine_object['ok'] = compiled and all_tests_passed
             subroutine_object['passed_count'] = passed
             subroutine_object['test_count'] = len(outputs)
-            subroutine_object['score'] = score
+            subroutine_object['score'] = float(score)
             subroutine_object['tests'] = tests_list
 
             subroutine_list.append(subroutine_object)
