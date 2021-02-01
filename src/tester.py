@@ -197,7 +197,7 @@ class Tester:
                 if test_passed:
                     passed = passed + 1
 
-                    score = score + Decimal(weight)
+                    score = score + int(Decimal(weight) * 1_000_000)
                 else:
                     all_tests_passed = False
 
@@ -213,7 +213,7 @@ class Tester:
             subroutine_object['ok'] = compiled and all_tests_passed
             subroutine_object['passed_count'] = passed
             subroutine_object['test_count'] = len(outputs)
-            subroutine_object['score'] = float(score)
+            subroutine_object['score'] = float(Decimal(score) / 1_000_000)
             subroutine_object['tests'] = tests_list
 
             subroutine_list.append(subroutine_object)
