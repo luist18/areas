@@ -9,6 +9,6 @@ sh $DIR/requirements/system_requirements.sh
 
 pip3 install -U -r $DIR/requirements/py_requirements.txt
 
-export MAST_PATH=$DIR/src/main.py
+export MAST_PATH=$DIR/arm63_tester/main.py
 
 echo 'alias mast="python3 '$DIR'/src/main.py"' >> ~/.bashrc

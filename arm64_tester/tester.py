@@ -1,10 +1,10 @@
-from zipfile import ZipFile as unzip
-from re import match, search, IGNORECASE
-from shutil import rmtree as delete_dir
-from decimal import Decimal
+import json
 import os
 import subprocess
-import json
+from decimal import Decimal
+from re import IGNORECASE, match, search
+from shutil import rmtree as delete_dir
+from zipfile import ZipFile as unzip
 
 from exception import *
 
@@ -12,13 +12,17 @@ from exception import *
 class Tester:
     """Evaluator class that grades student's submissions based on test input/output comparison and optional code scoring"""
 
-    def __init__(self, cmd_line_args, subroutines, subroutine_template_c_files, test_suite):
-        self.temp_grading_folder = cmd_line_args['gfd']
-        self.feedback_folder = cmd_line_args['ffd']
+    def __init__(self, subroutines, test_suite, cmd_line_args=None, grading_folder=None,
+                 feedback_folder=None, float_threshold=None, timeout=None):
+        self.temp_grading_folder = grading_folder or cmd_line_args['gfd']
+        self.feedback_folder = feedback_folder or cmd_line_args['ffd']
         self.subroutines = subroutines
-        self.template_files = subroutine_template_c_files
-        self.float_threshold = cmd_line_args['fpre']
-        self.timeout = cmd_line_args['tout']
+        self.float_threshold = float_threshold or cmd_line_args['fpre']
+        self.timeout = timeout or cmd_line_args['tout']
+
+        self.template_files = [sr.build_c_file()
+                               for sr in self.subroutines.values()]
+
         self.test_outputs = [list(map(lambda test: test['outputs'], test_suite[name]))
                              for name in self.subroutines.keys()]
         self.test_inputs = [list(map(lambda test: test['inputs'], test_suite[name]))
@@ -218,7 +222,8 @@ class Tester:
 
             subroutine_list.append(subroutine_object)
 
-        json.dump({'submission_name': filename, 'subroutines': subroutine_list}, feedback_file, indent=4)
+        json.dump({'submission_name': filename,
+                  'subroutines': subroutine_list}, feedback_file, indent=4)
         # Remove temporary auxiliary folder and write final scores
         delete_dir(self.temp_grading_folder)
 

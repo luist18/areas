@@ -70,8 +70,7 @@ if __name__ == "__main__":
 
     program_args = {key: args[key]
                     for key in ['gfd', 'ffd', 'grf', 'tout', 'fpre']}
-    evaluator = Evaluator(program_args, subroutine_objs, [
-                          sr.build_c_file() for sr in subroutine_objs.values()], test_suite)
+    evaluator = Evaluator(subroutine_objs, test_suite, cmd_line_args=program_args)
 
     result = []
 

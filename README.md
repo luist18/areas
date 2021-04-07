@@ -68,20 +68,20 @@ Options:
 
 #### 4.1.1. Primitive data types
 
-* `int`
-* `long`
-* `float`
-* `double`
-* `char`
+- `int`
+- `long`
+- `float`
+- `double`
+- `char`
 
 #### 4.1.2. Array data types
 
-* `char*/string`
-* `array int`
-* `array long`
-* `array float`
-* `array double`
-* `array char`
+- `char*/string`
+- `array int`
+- `array long`
+- `array float`
+- `array double`
+- `array char`
 
 ### 4.2. subroutines.yaml
 
@@ -141,7 +141,8 @@ submission.zip
 
 For each submission file a `.json` file is created in the feedback directory with the same name of the `.zip` file. The file contains all information about compilation status and test cases. In addition, a simplified version of the result of all submissions is created in a `result.json`. The content of the files look as follows:
 
-**submission.json**
+File **submission.json**
+
 ```json
 [
     {
@@ -204,7 +205,8 @@ For each submission file a `.json` file is created in the feedback directory wit
 ]
 ```
 
-**result.json**
+File **result.json**
+
 ```json
 [
     {

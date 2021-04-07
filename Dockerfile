@@ -12,7 +12,7 @@ WORKDIR /usr/tool
 COPY requirements /requirements
 
 # Tool source code
-COPY src /src
+COPY arm64_tester /arm64_tester
 
 # Ensure packages are up to date
 RUN apt-get update
@@ -21,7 +21,7 @@ RUN apt-get update
 RUN sh /requirements/system_requirements.sh
 RUN pip3 install -U -r $DIR/requirements/py_requirements.txt
 
-RUN echo 'alias code-correction="python3 /src/main.py"' >> ~/.bashrc
+RUN echo 'alias code-correction="python3 /arm64_tester/main.py"' >> ~/.bashrc
 
 # Default command
 CMD /bin/bash
