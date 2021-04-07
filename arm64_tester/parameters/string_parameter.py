@@ -1,4 +1,4 @@
-from .parameter import parameter
+from arm64_tester.parameters.parameter import parameter
 
 class string_parameter(parameter):
     """String subroutine parameter"""

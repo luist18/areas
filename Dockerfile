@@ -19,7 +19,7 @@ RUN apt-get update
 
 # Install
 RUN sh /requirements/system_requirements.sh
-RUN pip3 install -U -r $DIR/requirements/py_requirements.txt
+RUN pip3 install -U -r $DIR/requirements/requirements.txt
 
 RUN echo 'alias code-correction="python3 /arm64_tester/main.py"' >> ~/.bashrc
 

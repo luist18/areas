@@ -1,31 +1,35 @@
-from yaml import YAMLError, safe_load
 from datetime import datetime
 from re import IGNORECASE, match, search
 
-from exception import ToolFileError
-from subroutines.array_subroutine import array_subroutine as Array
-from subroutines.mixed_subroutine import mixed_subroutine as Mixed
-from subroutines.numeric_subroutine import numeric_subroutine as Numeric
-from subroutines.void_subroutine import void_subroutine as Void
-from tester import Tester
+from yaml import YAMLError, safe_load
+from yaml.events import ScalarEvent
+
+from arm64_tester.exception import ToolFileError
+from arm64_tester.subroutines.array_subroutine import array_subroutine as Array
+from arm64_tester.subroutines.mixed_subroutine import mixed_subroutine as Mixed
+from arm64_tester.subroutines.numeric_subroutine import \
+    numeric_subroutine as Numeric
+from arm64_tester.subroutines.void_subroutine import void_subroutine as Void
+from arm64_tester.tester import Tester
 
 
 class Test:
 
     def __init__(self, submission_file, subroutine_file, tests_file,
-                 timeout=1.0, float_threshold=1e-6):
+                 timeout=1.0, float_threshold=1e-6, save_to_file=False):
         self.submission_file = submission_file
         self.subroutine_file = subroutine_file
         self.tests_file = tests_file
         self.timeout = timeout
         self.float_threshold = float_threshold
+        self.save_to_file = save_to_file
 
         self.__read_files()
         self.__build_test_cases()
 
     def __read_files(self):
         try:
-            self.subroutines = safe_load(open(self.subroutines_file))
+            self.subroutines = safe_load(open(self.subroutine_file))
             self.test_suite = safe_load(open(self.tests_file))
         except IOError as err:
             raise ToolFileError(
@@ -53,23 +57,24 @@ class Test:
     def run(self):
         folder_prefix = str(datetime.now().microsecond)
 
-        grading_folder = f'tmp_{folder_prefix}/grading'
-        feedback_folder = f'tmp_{folder_prefix}/feedback'
+        grading_folder = f'tmp_{folder_prefix}_grading'
+        feedback_folder = f'tmp_{folder_prefix}_feedback'
 
-        tester = Tester(self.subroutines, self.test_suite, grading_folder=grading_folder,
-                        feedback_folder=feedback_folder, float_threshold=self.float_threshold, timeout=self.timeout)
+        tester = Tester(self.subroutine_objects, self.test_suite, grading_folder=grading_folder,
+                        feedback_folder=feedback_folder, float_threshold=self.float_threshold,
+                        timeout=self.timeout, save_to_file=self.save_to_file)
 
         submission = tester.grade_submission(self.submission_file)
 
         filename = match(
             r'(?:.+\/)*(.*)?.*\.zip', self.submission_file, flags=IGNORECASE).group(1)
 
-        subroutines_result = [{
+        """ subroutines_result = [{
             'name': subroutine['name'],
             'score': subroutine['score']
-        } for subroutine in submission]
+        } for subroutine in submission] """
 
         return {
             'submission_name': filename,
-            'subroutines': subroutines_result
+            'subroutines': submission,
         }

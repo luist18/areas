@@ -1,7 +1,7 @@
-from .subroutine import subroutine
-from parameters.string_parameter import string_parameter as String
-from parameters.numeric_parameter import numeric_parameter as Numeric
-from parameters.array_parameter import array_parameter as Array
+from arm64_tester.subroutines.subroutine import subroutine
+from arm64_tester.parameters.string_parameter import string_parameter as String
+from arm64_tester.parameters.numeric_parameter import numeric_parameter as Numeric
+from arm64_tester.parameters.array_parameter import array_parameter as Array
 
 class numeric_subroutine(subroutine):
     """Subroutine that returns a single numeric value (e.g., int, long, float, double)"""

@@ -1,4 +1,4 @@
-from .parameter import parameter
+from arm64_tester.parameters.parameter import parameter
 
 class numeric_parameter(parameter):
     """Numeric subroutine parameter"""

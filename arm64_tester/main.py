@@ -2,10 +2,10 @@ from yaml import safe_load, YAMLError
 from argparse import ArgumentParser
 from sys import exit
 from re import match, search, IGNORECASE
-from subroutines.numeric_subroutine import numeric_subroutine as Numeric
-from subroutines.array_subroutine import array_subroutine as Array
-from subroutines.mixed_subroutine import mixed_subroutine as Mixed
-from subroutines.void_subroutine import void_subroutine as Void
+from arm64_tester.subroutines.numeric_subroutine import numeric_subroutine as Numeric
+from arm64_tester.subroutines.array_subroutine import array_subroutine as Array
+from arm64_tester.subroutines.mixed_subroutine import mixed_subroutine as Mixed
+from arm64_tester.subroutines.void_subroutine import void_subroutine as Void
 import json
 
 from tester import Tester as Evaluator
