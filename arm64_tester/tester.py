@@ -33,7 +33,7 @@ class Tester:
 
         if os.path.exists(self.feedback_folder):
             delete_dir(self.feedback_folder)
-        
+
         if self.save_to_file:
             os.mkdir(self.feedback_folder)
 

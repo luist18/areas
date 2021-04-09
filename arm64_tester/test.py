@@ -1,15 +1,13 @@
 from datetime import datetime
-from re import IGNORECASE, match, search
+from re import IGNORECASE, match
 
 from yaml import YAMLError, safe_load
-from yaml.events import ScalarEvent
 
 from arm64_tester.exception import ToolFileError
-from arm64_tester.subroutines.array_subroutine import array_subroutine as Array
-from arm64_tester.subroutines.mixed_subroutine import mixed_subroutine as Mixed
-from arm64_tester.subroutines.numeric_subroutine import \
-    numeric_subroutine as Numeric
-from arm64_tester.subroutines.void_subroutine import void_subroutine as Void
+from arm64_tester.subroutines import ArraySubroutine as Array
+from arm64_tester.subroutines import MixedSubroutine as Mixed
+from arm64_tester.subroutines import NumericSubroutine as Numeric
+from arm64_tester.subroutines import VoidSubroutine as Void
 from arm64_tester.tester import Tester
 
 

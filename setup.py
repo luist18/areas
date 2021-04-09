@@ -8,9 +8,11 @@ with open('requirements/requirements.txt') as f:
 
 setup(
     name="arm64_tester",
-    version="0.1",
+    version="0.1.1",
     author="Luis Tavares",
     python_requires='>=3.6',
+    long_description_content_type='text/markdown',
+    long_description=long_description,
     install_requires=required,
     packages=find_packages(),
     classifiers=[

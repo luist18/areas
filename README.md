@@ -8,7 +8,7 @@ Microprocessors and Personal Computers ARM subroutine tester tool.
 
 The MAST tool is originally a fork from [João Damas'](https://github.com/cyrilico) [Automatic Observation and (grade) Calculation for (subroutine) Operations tool](https://github.com/cyrilico/aoco-code-correction). It is a tool to automate student's grading in the assignments done during the Microprocessor and Personal Computers course unit.
 
-### Differences with the original tool<!-- omit in toc -->
+## Differences with the original tool<!-- omit in toc -->
 
 To ease the communication between the backend server and the tool the output demanded changes. Output `.txt` and `.csv` files are now combined in a more complete `.json` file. Structure of the `.zip` input file is simplified. Unsupported data types such as long and double are now supported. A new input parameter - weight - is introduced.
 

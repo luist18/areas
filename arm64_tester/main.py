@@ -1,14 +1,15 @@
-from yaml import safe_load, YAMLError
-from argparse import ArgumentParser
-from sys import exit
-from re import match, search, IGNORECASE
-from arm64_tester.subroutines.numeric_subroutine import numeric_subroutine as Numeric
-from arm64_tester.subroutines.array_subroutine import array_subroutine as Array
-from arm64_tester.subroutines.mixed_subroutine import mixed_subroutine as Mixed
-from arm64_tester.subroutines.void_subroutine import void_subroutine as Void
 import json
+from argparse import ArgumentParser
+from re import IGNORECASE, match
+from sys import exit
 
-from tester import Tester as Evaluator
+from yaml import YAMLError, safe_load
+
+from arm64_tester.subroutines import ArraySubroutine as Array
+from arm64_tester.subroutines import MixedSubroutine as Mixed
+from arm64_tester.subroutines import NumericSubroutine as Numeric
+from arm64_tester.subroutines import VoidSubroutine as Void
+from arm64_tester.tester import Tester as Evaluator
 
 
 def parse_args():
@@ -70,7 +71,8 @@ if __name__ == "__main__":
 
     program_args = {key: args[key]
                     for key in ['gfd', 'ffd', 'grf', 'tout', 'fpre']}
-    evaluator = Evaluator(subroutine_objs, test_suite, cmd_line_args=program_args)
+    evaluator = Evaluator(subroutine_objs, test_suite,
+                          cmd_line_args=program_args)
 
     result = []
 
