@@ -8,7 +8,7 @@ with open('requirements/requirements.txt') as f:
 
 setup(
     name="arm64_tester",
-    version="0.1.1",
+    version="0.1.2",
     author="Luis Tavares",
     python_requires='>=3.6',
     long_description_content_type='text/markdown',

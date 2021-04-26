@@ -193,6 +193,7 @@ class Tester:
 
                     test_object['run'] = False
                     test_object['error'] = str(runtime_error)
+                    test_object['input'] = inp
 
                     tests_list.append(test_object)
                     continue
