@@ -4,6 +4,7 @@ from arm64_tester.parameters import ArrayParameter as Array
 from arm64_tester.parameters import NumericParameter as Numeric
 from arm64_tester.parameters import StringParameter as String
 from arm64_tester.subroutines.subroutine import Subroutine
+from arm64_tester.util.type_casting import cast_to_output
 
 
 class ArraySubroutine(Subroutine):
@@ -54,3 +55,23 @@ class ArraySubroutine(Subroutine):
                         return False
 
         return True
+
+    def convert_outputs(self, real):
+        outputs = []
+
+        for type, output in zip(self.outputs, real):
+            if type == 'string':
+                outputs.append(output)
+            else:
+                array_output = []
+
+                arr_type = type.replace('array', '').strip()
+                re_arr = literal_eval(output)
+
+                for array_element in zip(re_arr):
+                    if arr_type == 'int' or arr_type == 'long':
+                        array_output.append(cast_to_output('integer', array_element))
+                    else:
+                        array_output.append(cast_to_output('float', array_element))
+
+        return outputs

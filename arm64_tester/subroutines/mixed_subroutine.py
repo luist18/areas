@@ -20,6 +20,9 @@ class MixedSubroutine(Subroutine):
             self.printf_format = 'f'
         elif number_return_type == 'char':
             self.printf_format = 'c'
+        elif number_return_type == 'chari':
+            self.element_type = 'char'
+            self.printf_format = 'd'
         self.array_outputs = array_outputs
 
     def get_nr_outputs(self):

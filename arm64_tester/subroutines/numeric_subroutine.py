@@ -4,6 +4,7 @@ from arm64_tester.parameters import ArrayParameter as Array
 from arm64_tester.parameters import NumericParameter as Numeric
 from arm64_tester.parameters import StringParameter as String
 from arm64_tester.subroutines.subroutine import Subroutine
+from arm64_tester.util.type_casting import cast_to_output
 
 
 class NumericSubroutine(Subroutine):
@@ -44,3 +45,9 @@ class NumericSubroutine(Subroutine):
             return expected[0] == int(real[0])
         else:
             return abs(expected[0] - float(real[0])) <= precision
+
+    def convert_outputs(self, real):
+        if self.c_function_return == 'int' or self.c_function_return == 'long':
+            return [cast_to_output('integer', real[0])]
+
+        return [cast_to_output('float', real[0])]

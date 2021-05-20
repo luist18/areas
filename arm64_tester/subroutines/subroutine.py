@@ -36,3 +36,7 @@ class Subroutine:
     def compare_outputs(self, expected, real, precision):
         """Method that, given an instance of test outputs, compares to see if the real results match the expected ones"""
         pass
+
+    def convert_outputs(self, real):
+        """Method that, given an instance of test outputs, converts it to its real types"""
+        pass

@@ -73,6 +73,9 @@ class Tester:
         open('{}.c'.format(output_file), 'w').write(
             template_file.format(*[param.get_literal_representantion(inp_literal) for param, inp_literal in sorted_param_list]))
 
+        print(*[param.get_literal_representantion(inp_literal)
+              for param, inp_literal in sorted_param_list])
+
         # Compile student code alongside generated C file
         compilation_process = subprocess.Popen('aarch64-linux-gnu-gcc -o {} {}.c {} -static'.format(
             output_file,
@@ -118,6 +121,9 @@ class Tester:
             'utf-8', 'backslashreplace').strip(), open('{}.txt'.format(output_file), 'rb').readlines()))
 
         # Should return outputs and result (expected if necessary)
+
+        converted_output = self.subroutines[subroutine].convert_outputs(
+            real_outputs)
 
         # Actual comparison
         if not self.subroutines[subroutine].compare_outputs(expected_outputs, real_outputs, self.float_threshold):
@@ -231,6 +237,6 @@ class Tester:
             json.dump({'submission_name': filename,
                        'subroutines': subroutine_list}, feedback_file, indent=4)
         # Remove temporary auxiliary folder and write final scores
-        delete_dir(self.temp_grading_folder)
+        # delete_dir(self.temp_grading_folder)
 
         return subroutine_list

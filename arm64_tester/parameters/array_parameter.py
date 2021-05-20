@@ -9,6 +9,9 @@ class ArrayParameter(Parameter):
         self.element_type = element_type
         if element_type == 'char':
             self.printf_format = 'c'
+        elif element_type == 'chari':
+            self.element_type = 'char'
+            self.printf_format = 'd'
         elif element_type == 'int':
             self.printf_format = 'd'
         elif element_type == 'long':
@@ -27,7 +30,8 @@ class ArrayParameter(Parameter):
         return 'arg{}'.format(self.idx) if self.is_output else '({}[]){{{{ {{}} }}}}'.format(self.element_type)
 
     def get_literal_representantion(self, value):
-        return ','.join(map(str, value)) if self.printf_format != 'c' else ','.join(map(lambda x: "'{}'".format(x), value))
+        return ','.join(map(str, value)) if (self.element_type != 'char'
+                                             and self.element_type != 'chari') else','.join(map(lambda x: str(x) if isinstance(x, int) else "'{}'".format(x), value))
 
     def get_test_call_output_representation(self):
         var_name = 'arg{}'.format(self.idx)
