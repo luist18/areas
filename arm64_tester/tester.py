@@ -57,6 +57,15 @@ class Tester:
         except FileNotFoundError:
             return []
 
+    def cleanup_files(self, files):
+        for path in files:
+            file = open(path, 'r+')
+            new_content = file.read().replace('system', 'blacklisted_word')
+            file.seek(0)
+            file.write(new_content)
+            file.truncate()
+            file.close()
+
     def compile_and_run(self, subroutine, template_file, inp, output_file):
         """Compiles and runs, with the generated C template files, the student's submission files.
         Returns a boolean tuple with information of a successful (or not) compilation and a successful (or not) test run"""
@@ -73,18 +82,18 @@ class Tester:
         open('{}.c'.format(output_file), 'w').write(
             template_file.format(*[param.get_literal_representantion(inp_literal) for param, inp_literal in sorted_param_list]))
 
-        print(*[param.get_literal_representantion(inp_literal)
-              for param, inp_literal in sorted_param_list])
+        compilation_files = list(
+            map(lambda x: "{}/{}.s".format(self.temp_grading_folder, x.lower()),
+                [subroutine, *self.get_extra_assembly_to_include(subroutine)])
+        )
 
+        self.cleanup_files(compilation_files) # temporary fix
+        
         # Compile student code alongside generated C file
         compilation_process = subprocess.Popen('aarch64-linux-gnu-gcc -o {} {}.c {} -static'.format(
             output_file,
             output_file,
-            ' '.join(
-                list(
-                    map(lambda x: "{}/{}.s".format(self.temp_grading_folder, x.lower()),
-                        [subroutine, *self.get_extra_assembly_to_include(subroutine)])
-                ))
+            ' '.join(compilation_files)
         ).split(' '), stderr=subprocess.PIPE)
         compilation_process.wait()
         (_, stderr) = compilation_process.communicate()
