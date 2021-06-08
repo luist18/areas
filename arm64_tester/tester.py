@@ -6,6 +6,8 @@ from re import IGNORECASE, match, search
 from shutil import rmtree as delete_dir
 from zipfile import ZipFile as unzip
 
+import unidecode
+
 from arm64_tester.exception import *
 
 
@@ -52,14 +54,14 @@ class Tester:
         try:
             with open('{}/{}.s'.format(self.temp_grading_folder, subroutine.lower()), mode='rb') as f:
                 calls = list(filter(lambda x: x is not None, map(lambda y: search(
-                    b'bl\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
+                    rb'bl\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
                 return [sr.group(1).lower().decode('utf-8') for sr in calls if os.path.exists('{}/{}.s'.format(self.temp_grading_folder, sr.group(1).lower().decode('utf-8')))]
         except FileNotFoundError:
             return []
 
     def cleanup_files(self, files):
         for path in files:
-            file = open(path, 'r+')
+            file = open(path, 'r+', encoding='ISO-8859-1')
             new_content = file.read().replace('system', 'blacklisted_word')
             file.seek(0)
             file.write(new_content)
