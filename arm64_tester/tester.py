@@ -56,8 +56,9 @@ class Tester:
                 calls = list(filter(lambda x: x is not None, map(lambda y: search(
                     rb'bl\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
 
-                calls = list(set(calls)) # removing duplicates, ugh just a quick fix
-                return [sr.group(1).lower().decode('utf-8') for sr in calls if os.path.exists('{}/{}.s'.format(self.temp_grading_folder, sr.group(1).lower().decode('utf-8')))]
+                calls = set(map(lambda x: x.group(1).lower().decode('utf-8'), calls))
+                
+                return [sr for sr in calls if os.path.exists('{}/{}.s'.format(self.temp_grading_folder, sr))]
         except FileNotFoundError:
             return []
 
