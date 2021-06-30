@@ -41,8 +41,8 @@ class ArraySubroutine(Subroutine):
         if(len(expected) != len(real)):
             return False
         for out_type, exp, re in zip(self.outputs, expected, real):
-            if out_type == 'string' and exp != real:
-                return False
+            if out_type == 'string':
+                return exp == re
             else:  # Array
                 arr_type = out_type.replace('array', '').strip()
                 re_arr = literal_eval(re)
