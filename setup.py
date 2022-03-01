@@ -8,13 +8,13 @@ with open('requirements/requirements.txt') as f:
 
 setup(
     name="arm64_tester",
-    version="1.2",
+    version="1.2.2",
     author="Luis Tavares",
     python_requires='>=3.6',
     long_description_content_type='text/markdown',
     long_description=long_description,
     install_requires=required,
-    packages=find_packages(),
+    packages=find_packages(exclude=['test']),
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
