@@ -56,8 +56,9 @@ class Tester:
                 calls = list(filter(lambda x: x is not None, map(lambda y: search(
                     rb'bl\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
 
-                calls = set(map(lambda x: x.group(1).lower().decode('utf-8'), calls))
-                
+                calls = set(map(lambda x: x.group(
+                    1).lower().decode('utf-8'), calls))
+
                 return [sr for sr in calls if os.path.exists('{}/{}.s'.format(self.temp_grading_folder, sr))]
         except FileNotFoundError:
             return []
@@ -92,8 +93,11 @@ class Tester:
                 [subroutine, *self.get_extra_assembly_to_include(subroutine)])
         )
 
-        self.cleanup_files(compilation_files) # temporary fix
-        
+        try:
+            self.cleanup_files(compilation_files)  # temporary fix
+        except Exception as e:
+            pass
+
         # Compile student code alongside generated C file
         compilation_process = subprocess.Popen('aarch64-linux-gnu-gcc -o {} {}.c {} -static'.format(
             output_file,
