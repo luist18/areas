@@ -45,6 +45,8 @@ class ArraySubroutine(Subroutine):
                 return exp == re
             else:  # Array
                 arr_type = out_type.replace('array', '').strip()
+                re.replace('-nan', 'None').replace('+nan',
+                                                   'None').replace('nan', 'None')
                 re_arr = literal_eval(re)
                 if(len(exp) != len(re_arr)):
                     return False
@@ -66,12 +68,17 @@ class ArraySubroutine(Subroutine):
                 array_output = []
 
                 arr_type = type.replace('array', '').strip()
+
+                re_arr.replace('-nan', 'None').replace('+nan',
+                                                       'None').replace('nan', 'None')
                 re_arr = literal_eval(output)
 
                 for array_element in zip(re_arr):
                     if arr_type == 'int' or arr_type == 'long':
-                        array_output.append(cast_to_output('integer', array_element))
+                        array_output.append(
+                            cast_to_output('integer', array_element))
                     else:
-                        array_output.append(cast_to_output('float', array_element))
+                        array_output.append(
+                            cast_to_output('float', array_element))
 
         return outputs

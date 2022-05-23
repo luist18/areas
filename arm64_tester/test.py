@@ -58,21 +58,28 @@ class Test:
         grading_folder = f'tmp_{folder_prefix}_grading'
         feedback_folder = f'tmp_{folder_prefix}_feedback'
 
-        tester = Tester(self.subroutine_objects, self.test_suite, grading_folder=grading_folder,
-                        feedback_folder=feedback_folder, float_threshold=self.float_threshold,
-                        timeout=self.timeout, save_to_file=self.save_to_file)
+        try:
+            tester = Tester(self.subroutine_objects, self.test_suite, grading_folder=grading_folder,
+                            feedback_folder=feedback_folder, float_threshold=self.float_threshold,
+                            timeout=self.timeout, save_to_file=self.save_to_file)
 
-        submission = tester.grade_submission(self.submission_file)
+            submission = tester.grade_submission(self.submission_file)
 
-        filename = match(
-            r'(?:.+\/)*(.*)?.*\.zip', self.submission_file, flags=IGNORECASE).group(1)
+            filename = match(
+                r'(?:.+\/)*(.*)?.*\.zip', self.submission_file, flags=IGNORECASE).group(1)
 
-        """ subroutines_result = [{
-            'name': subroutine['name'],
-            'score': subroutine['score']
-        } for subroutine in submission] """
+            """ subroutines_result = [{
+                'name': subroutine['name'],
+                'score': subroutine['score']
+            } for subroutine in submission] """
 
-        return {
-            'submission_name': filename,
-            'subroutines': submission,
-        }
+            return {
+                'submission_name': filename,
+                'subroutines': submission,
+            }
+        except Exception as err:
+            raise err
+        finally:
+            import shutil
+            shutil.rmtree(grading_folder, ignore_errors=True)
+            shutil.rmtree(feedback_folder, ignore_errors=True)

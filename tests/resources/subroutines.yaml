@@ -1,0 +1,9 @@
+calc:
+  params:
+    - int
+    - array float
+    - array float
+    - array char
+    - array float
+  return:
+    - array float
