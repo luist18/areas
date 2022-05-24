@@ -11,4 +11,6 @@ class TestRun(TestCase):
 
         test = Test(submission_path, subroutine_path, tests_path)
 
-        test.run()
+        result = test.run()
+
+        print(result)

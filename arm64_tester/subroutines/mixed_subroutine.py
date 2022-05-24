@@ -67,11 +67,14 @@ class MixedSubroutine(Subroutine):
                     return False
             else:  # Array
                 arr_type = out_type.replace('array', '').strip()
+                re = re.replace('-nan', 'None').replace('+nan', 'None').replace('nan', 'None')
                 re_arr = literal_eval(re)
                 if(len(exp) != len(re_arr)):
                     return False
                 for exp_el, re_el in zip(exp, re_arr):
                     if (arr_type == 'int' or arr_type == 'long') and exp_el != re_el:
+                        return False
+                    elif re_el is None:
                         return False
                     elif abs(exp_el-re_el) > precision:
                         return False

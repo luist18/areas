@@ -45,13 +45,14 @@ class ArraySubroutine(Subroutine):
                 return exp == re
             else:  # Array
                 arr_type = out_type.replace('array', '').strip()
-                re.replace('-nan', 'None').replace('+nan',
-                                                   'None').replace('nan', 'None')
+                re = re.replace('-nan', 'None').replace('+nan', 'None').replace('nan', 'None')
                 re_arr = literal_eval(re)
                 if(len(exp) != len(re_arr)):
                     return False
                 for exp_el, re_el in zip(exp, re_arr):
                     if (arr_type == 'int' or arr_type == 'long') and exp_el != re_el:
+                        return False
+                    elif re_el is None:
                         return False
                     elif abs(exp_el-re_el) > precision:
                         return False
@@ -69,8 +70,8 @@ class ArraySubroutine(Subroutine):
 
                 arr_type = type.replace('array', '').strip()
 
-                re_arr.replace('-nan', 'None').replace('+nan',
-                                                       'None').replace('nan', 'None')
+                output = output.replace('-nan', 'None').replace('+nan', 'None').replace('nan', 'None')
+
                 re_arr = literal_eval(output)
 
                 for array_element in zip(re_arr):
