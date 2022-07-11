@@ -73,6 +73,7 @@ Options:
 - `float`
 - `double`
 - `char`
+- `chari` (char represented as an unsgined intenger - similar to char but has to be used when printed characters are not ASCII characters)
 
 #### 4.1.2. Array data types
 
@@ -82,6 +83,7 @@ Options:
 - `array float`
 - `array double`
 - `array char`
+- `array chari`
 
 ### 4.2. subroutines.yaml
 
