@@ -1,9 +1,9 @@
 from ast import literal_eval
 
-from arm64_tester.parameters import ArrayParameter as Array
-from arm64_tester.parameters import NumericParameter as Numeric
-from arm64_tester.parameters import StringParameter as String
-from arm64_tester.subroutines.subroutine import Subroutine
+from areas.parameters import ArrayParameter as Array
+from areas.parameters import NumericParameter as Numeric
+from areas.parameters import StringParameter as String
+from areas.subroutines.subroutine import Subroutine
 
 
 class MixedSubroutine(Subroutine):
@@ -67,7 +67,8 @@ class MixedSubroutine(Subroutine):
                     return False
             else:  # Array
                 arr_type = out_type.replace('array', '').strip()
-                re = re.replace('-nan', 'None').replace('+nan', 'None').replace('nan', 'None')
+                re = re.replace('-nan', 'None').replace('+nan',
+                                                        'None').replace('nan', 'None')
                 re_arr = literal_eval(re)
                 if(len(exp) != len(re_arr)):
                     return False

@@ -3,12 +3,12 @@ from re import IGNORECASE, match
 
 from yaml import YAMLError, safe_load
 
-from arm64_tester.exception import ToolFileError
-from arm64_tester.subroutines import ArraySubroutine as Array
-from arm64_tester.subroutines import MixedSubroutine as Mixed
-from arm64_tester.subroutines import NumericSubroutine as Numeric
-from arm64_tester.subroutines import VoidSubroutine as Void
-from arm64_tester.tester import Tester
+from areas.exception import ToolFileError
+from areas.subroutines import ArraySubroutine as Array
+from areas.subroutines import MixedSubroutine as Mixed
+from areas.subroutines import NumericSubroutine as Numeric
+from areas.subroutines import VoidSubroutine as Void
+from areas.tester import Tester
 
 
 class Test:

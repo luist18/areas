@@ -1,4 +1,4 @@
-from arm64_tester.parameters.parameter import Parameter
+from areas.parameters.parameter import Parameter
 
 
 class NumericParameter(Parameter):

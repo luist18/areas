@@ -5,11 +5,11 @@ from sys import exit
 
 from yaml import YAMLError, safe_load
 
-from arm64_tester.subroutines import ArraySubroutine as Array
-from arm64_tester.subroutines import MixedSubroutine as Mixed
-from arm64_tester.subroutines import NumericSubroutine as Numeric
-from arm64_tester.subroutines import VoidSubroutine as Void
-from arm64_tester.tester import Tester as Evaluator
+from areas.subroutines import ArraySubroutine as Array
+from areas.subroutines import MixedSubroutine as Mixed
+from areas.subroutines import NumericSubroutine as Numeric
+from areas.subroutines import VoidSubroutine as Void
+from areas.tester import Tester as Evaluator
 
 
 def parse_args():

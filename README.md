@@ -17,31 +17,55 @@ To ease the communication between the backend server and the tool the output dem
 ## Table of contents<!-- omit in toc -->
 
 - [1. Installation](#1-installation)
-- [2. Running](#2-running)
-- [3. Usage](#3-usage)
-- [4. File syntax and structure](#4-file-syntax-and-structure)
-  - [4.1. Available data types](#41-available-data-types)
-    - [4.1.1. Primitive data types](#411-primitive-data-types)
-    - [4.1.2. Array data types](#412-array-data-types)
-  - [4.2. subroutines.yaml](#42-subroutinesyaml)
-  - [4.3. tests.yaml](#43-testsyaml)
-  - [4.4. submission.zip](#44-submissionzip)
-- [5. Results](#5-results)
+- [2. Developing](#2-developing)
+- [3. Running](#3-running)
+- [4. Usage](#4-usage)
+- [5. File syntax and structure](#5-file-syntax-and-structure)
+  - [5.1. Available data types](#51-available-data-types)
+    - [5.1.1. Primitive data types](#511-primitive-data-types)
+    - [5.1.2. Array data types](#512-array-data-types)
+  - [5.2. subroutines.yaml](#52-subroutinesyaml)
+  - [5.3. tests.yaml](#53-testsyaml)
+  - [5.4. submission.zip](#54-submissionzip)
+- [6. Results](#6-results)
 
 ## 1. Installation
 
 Using Docker:
+
 ```bash
-$ docker pull luist188/mast-tool
+docker pull luist188/mast-tool
 ```
 
-## 2. Running
+## 2. Developing 
+
+To develop the tool you must setup a Docker development environment to ease the dependencies installation and setup an isolated environment.
+
+1. Build the Docker development image:
+
+   ```bash
+   docker build -f Dockerfile.dev -t arm_tester_dev .
+   ```
+
+2. Run the image with the shared folder:
+
+   ```bash
+   docker run -it -v $(pwd):/usr/app arm_tester_dev
+   ```
+
+3. Open the virtual env:
+
+    ```bash
+    . .venv/bin/activate
+    ```
+
+## 3. Running
 
 1. Place the input files inside any directory.
 2. Run the image with a shared volume pointing to the input directory: `docker run -v input:destination -it luist188/mast-tool` (you can learn more about `docker run` usage [here](https://docs.docker.com/engine/reference/run/))
 3. Run the alias command (assure you are using `/bin/bash`) `mast` or run `python main.py` in the tool's source.
 
-## 3. Usage
+## 4. Usage
 
 ```console
 $ mast [-h] -sr SR -t T -sm SM [SM ...] [-gfd GFD] [-ffd FFD] [-grf GRF] [-tout TOUT] [-fpre FPRE]
@@ -62,11 +86,11 @@ Options:
     points in test cases                                                      [default:1e-6] [float]
 ```
 
-## 4. File syntax and structure
+## 5. File syntax and structure
 
-### 4.1. Available data types
+### 5.1. Available data types
 
-#### 4.1.1. Primitive data types
+#### 5.1.1. Primitive data types
 
 - `int`
 - `long`
@@ -74,7 +98,7 @@ Options:
 - `double`
 - `char`
 
-#### 4.1.2. Array data types
+#### 5.1.2. Array data types
 
 - `char*/string`
 - `array int`
@@ -83,7 +107,7 @@ Options:
 - `array double`
 - `array char`
 
-### 4.2. subroutines.yaml
+### 5.2. subroutines.yaml
 
 The input file for the subroutine declaration has to follow a specific structure and syntax described as follows:
 
@@ -107,7 +131,7 @@ bar:
 
 The subroutine name has to match the `.s` to test and is case insensitive. Thus, the subroutine `foo` or `bar` is going to check any `.s` file that matches its name case insensitive. All subroutines must contain an array of parameters, `params`, and an array of returns, `return`.
 
-### 4.3. tests.yaml
+### 5.3. tests.yaml
 
 The input file for the test cases declaration has to follow a specific structure and syntax described as follows:
 
@@ -127,7 +151,7 @@ bar:
 
 The root declaration of a test case must match the name declared in the `subroutines.yaml` file. Test cases have an array of inputs that has a list of outputs and a test weight. The sum of the test weights must be 1.0.
 
-### 4.4. submission.zip
+### 5.4. submission.zip
 
 The submission `zip` file must contain a `.s` file in its root. For example, for the subroutine `foo` and `bar` the `zip` structure should be as follows:
 
@@ -137,7 +161,7 @@ submission.zip
 └── bar.s
 ```
 
-## 5. Results
+## 6. Results
 
 For each submission file a `.json` file is created in the feedback directory with the same name of the `.zip` file. The file contains all information about compilation status and test cases. In addition, a simplified version of the result of all submissions is created in a `result.json`. The content of the files look as follows:
 

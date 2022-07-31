@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from arm64_tester import Test
+from areas import Test
 
 
 class TestRun(TestCase):

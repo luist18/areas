@@ -8,7 +8,7 @@ from zipfile import ZipFile as unzip
 
 import unidecode
 
-from arm64_tester.exception import *
+from areas.exception import *
 
 
 class Tester:
