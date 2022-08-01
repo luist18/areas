@@ -1,12 +1,13 @@
 class Subroutine:
     """Abstract parent class that defines a generic subroutine and all the methods it should implement"""
 
-    def __init__(self, name, parameters):
+    def __init__(self, name, parameters, architecture="arm"):
         self.name = name
         self.parameters_raw = parameters
         # By default, no return value in C function. To be overriden by subclasses when necessary
         self.c_function_return = "void"
         self.parameters = []
+        self.architecture = architecture
 
     def get_nr_outputs(self):
         """Method that returns number of non int outputs"""

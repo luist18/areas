@@ -8,6 +8,7 @@ from zipfile import ZipFile as unzip
 
 import unidecode
 
+from areas.config.architectures import ARCHITECTURES
 from areas.exception import *
 
 
@@ -72,9 +73,12 @@ class Tester:
             file.truncate()
             file.close()
 
-    def compile_and_run(self, subroutine, template_file, inp, output_file):
+    def compile_and_run(self, subroutine, template_file, inp, output_file, architecture="arm"):
         """Compiles and runs, with the generated C template files, the student's submission files.
         Returns a boolean tuple with information of a successful (or not) compilation and a successful (or not) test run"""
+
+        compiler = ARCHITECTURES[architecture]['compiler']
+        emulator = ARCHITECTURES[architecture]['emulator']
 
         sr = self.subroutines[subroutine]
         sr_non_int_outputs = sr.get_nr_outputs()
@@ -99,7 +103,8 @@ class Tester:
             pass
 
         # Compile student code alongside generated C file
-        compilation_process = subprocess.Popen('aarch64-linux-gnu-gcc -o {} {}.c {} -static'.format(
+        compilation_process = subprocess.Popen('{} -o {} {}.c {} -static'.format(
+            compiler,
             output_file,
             output_file,
             ' '.join(compilation_files)
@@ -113,7 +118,7 @@ class Tester:
 
         # Execute and redirect output to temporary .txt file
         real_output_file = '{}.txt'.format(output_file)
-        execution_process = subprocess.Popen('timeout {} qemu-aarch64-static {}'.format(self.timeout, output_file), stdout=open(
+        execution_process = subprocess.Popen('timeout {} {} {}'.format(self.timeout, emulator, output_file), stdout=open(
             real_output_file, mode='w', encoding='utf-8'), stderr=subprocess.PIPE, shell=True)
         execution_process.wait()
         (_, stderr) = execution_process.communicate()
@@ -176,6 +181,9 @@ class Tester:
         subroutine_list = []
 
         for subroutine, template_file, inputs, outputs, weights in zip(self.subroutines.keys(), self.template_files, self.test_inputs, self.test_outputs, self.test_weights):
+            # set default compiler as arm
+            architecture = self.subroutines[subroutine].architecture or "arm"
+
             # Subroutine output file template
             output_file = '{}/{}'.format(self.temp_grading_folder,
                                          subroutine.lower())
@@ -206,7 +214,7 @@ class Tester:
 
                 try:
                     self.compile_and_run(
-                        subroutine, template_file, inp, output_file)
+                        subroutine, template_file, inp, output_file, architecture)
                 except CompileError as compile_error:
                     compile_output = str(compile_error)
                     compiled = False

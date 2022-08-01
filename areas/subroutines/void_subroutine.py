@@ -9,8 +9,8 @@ from areas.subroutines.subroutine import Subroutine
 class VoidSubroutine(Subroutine):
     """Subroutine that does not return anything, directly or indirectly (i.e., all output is printed directly in assembly)"""
 
-    def __init__(self, name, parameters):
-        super().__init__(name, parameters)
+    def __init__(self, name, parameters, architecture="arm"):
+        super().__init__(name, parameters, architecture)
 
     def get_nr_outputs(self):
         return 0

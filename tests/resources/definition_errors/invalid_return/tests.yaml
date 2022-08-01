@@ -1,0 +1,8 @@
+func:
+  - inputs:
+    - 4
+    - 4
+    - 4
+    outputs:
+    - 20
+    weight: 1

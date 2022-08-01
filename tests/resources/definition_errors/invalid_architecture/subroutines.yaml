@@ -1,0 +1,8 @@
+func:
+  architecture: arms
+  params:
+    - int
+    - int
+    - int
+  return:
+    - int

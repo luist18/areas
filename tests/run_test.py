@@ -11,6 +11,44 @@ class TestRun(TestCase):
 
         test = Test(submission_path, subroutine_path, tests_path)
 
+        # test.run()
+
+    def test_riscv_json(self):
+        pass
+
+    def test_riscv_yaml(self):
+        pass
+
+    def test_riscv_manual(self):
+        subroutines = {
+            "func": {
+                "architecture": "riscv",
+                "params": ["int", "int", "int"],
+                "return": ["int"]
+            }
+        }
+
+        tests = {
+            "func": [
+                {
+                    "inputs": [1, 2, 3],
+                    "outputs": [5],
+                    "weight": 0.5
+                },
+                {
+                    "inputs": [10, 20, 0],
+                    "outputs": [200],
+                    "weight": 0.5
+                }
+            ]
+        }
+
+        submission_path = "./tests/resources/riscv/submission.zip"
+
+        test = Test(submission_path, subroutines=subroutines, test_suite=tests)
+
         result = test.run()
 
-        print(result)
+        score = result['subroutines'][0]['score']
+
+        self.assertAlmostEqual(score, 1.0)

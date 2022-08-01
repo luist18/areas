@@ -1,0 +1,7 @@
+func:
+  params:
+    - inta
+    - int
+    - int
+  return:
+    - int

@@ -9,8 +9,8 @@ from areas.subroutines.subroutine import Subroutine
 class MixedSubroutine(Subroutine):
     """Subroutine that returns both a number and one or more arrays"""
 
-    def __init__(self, name, parameters, number_return_type, array_outputs):
-        super().__init__(name, parameters)
+    def __init__(self, name, parameters, number_return_type, array_outputs, architecture="arm"):
+        super().__init__(name, parameters, architecture)
         self.c_function_return = number_return_type
         if number_return_type == 'int':
             self.printf_format = 'd'

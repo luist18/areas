@@ -10,8 +10,8 @@ from areas.util.type_casting import cast_to_output
 class ArraySubroutine(Subroutine):
     """Subroutine that returns one or more arrays"""
 
-    def __init__(self, name, parameters, outputs):
-        super().__init__(name, parameters)
+    def __init__(self, name, parameters, outputs, architecture="arm"):
+        super().__init__(name, parameters, architecture)
         self.outputs = outputs
 
     def get_nr_outputs(self):

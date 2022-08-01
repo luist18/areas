@@ -10,8 +10,8 @@ from areas.util.type_casting import cast_to_output
 class NumericSubroutine(Subroutine):
     """Subroutine that returns a single numeric value (e.g., int, long, float, double)"""
 
-    def __init__(self, name, parameters, return_type):
-        super().__init__(name, parameters)
+    def __init__(self, name, parameters, return_type, architecture="arm"):
+        super().__init__(name, parameters, architecture)
         self.c_function_return = return_type
 
         if return_type == 'int':

@@ -1,8 +1,10 @@
+import json
 from datetime import datetime
 from re import IGNORECASE, match
 
 from yaml import YAMLError, safe_load
 
+import areas.util.subroutine_integrity as subroutine_integrity
 from areas.exception import ToolFileError
 from areas.subroutines import ArraySubroutine as Array
 from areas.subroutines import MixedSubroutine as Mixed
@@ -13,22 +15,54 @@ from areas.tester import Tester
 
 class Test:
 
-    def __init__(self, submission_file, subroutine_file, tests_file,
+    def __init__(self, submission_file, subroutine_file=None, tests_file=None,
+                 subroutines=None, test_suite=None,
                  timeout=1.0, float_threshold=1e-6, save_to_file=False):
         self.submission_file = submission_file
         self.subroutine_file = subroutine_file
         self.tests_file = tests_file
+
+        # files always override manual definitions
+        self.subroutines = subroutines
+        self.test_suite = test_suite
+
         self.timeout = timeout
         self.float_threshold = float_threshold
         self.save_to_file = save_to_file
 
         self.__read_files()
+        self.__parse_inputs()
         self.__build_test_cases()
+
+    def __parse_inputs(self):
+        for key in self.subroutines:
+            if key not in self.test_suite:
+                raise ToolFileError(
+                    f"Subroutine {key} is not in the test suite")
+            else:
+                subroutine = self.subroutines[key]
+                test_suite = self.test_suite[key]
+
+                subroutine_integrity.parse_subroutine(subroutine, test_suite)
+
+    def __load_file(self, file):
+        ext = file.split('.')[-1]
+
+        if ext == 'json':
+            return json.load(open(file))
+        elif ext == 'yaml' or ext == 'yml':
+            return safe_load(open(file))
+        else:
+            raise ToolFileError(
+                'File extension not supported: {}'.format(ext))
 
     def __read_files(self):
         try:
-            self.subroutines = safe_load(open(self.subroutine_file))
-            self.test_suite = safe_load(open(self.tests_file))
+            if self.subroutine_file is not None:
+                self.subroutines = self.__load_file(self.subroutine_file)
+
+            if self.tests_file is not None:
+                self.test_suite = self.__load_file(self.tests_file)
         except IOError as err:
             raise ToolFileError(
                 'Could not open: {}, please specify a valid file'.format(str(err)))
@@ -39,14 +73,17 @@ class Test:
     def __build_subroutine(self, name, definition):
         map_to_truth_value = ['array' in ret or ret ==
                               'string' for ret in definition['return']]
+
+        architecture = definition['architecture'] if 'architecture' in definition else "arm"
+
         if not len(map_to_truth_value):  # No returns - void subroutine
-            return Void(name, definition['params'])
+            return Void(name, definition['params'], architecture)
         elif all(map_to_truth_value):  # Only arrays and/or strings as return values
-            return Array(name, definition['params'], definition['return'])
+            return Array(name, definition['params'], definition['return'], architecture)
         elif not any(map_to_truth_value):  # Numeric output
-            return Numeric(name, definition['params'], definition['return'][0])
+            return Numeric(name, definition['params'], definition['return'][0], architecture)
         else:  # Mixed return
-            return Mixed(name, definition['params'], definition['return'][0], definition['return'][1:])
+            return Mixed(name, definition['params'], definition['return'][0], definition['return'][1:], architecture)
 
     def __build_test_cases(self):
         self.subroutine_objects = {name: self.__build_subroutine(
@@ -67,11 +104,6 @@ class Test:
 
             filename = match(
                 r'(?:.+\/)*(.*)?.*\.zip', self.submission_file, flags=IGNORECASE).group(1)
-
-            """ subroutines_result = [{
-                'name': subroutine['name'],
-                'score': subroutine['score']
-            } for subroutine in submission] """
 
             return {
                 'submission_name': filename,
