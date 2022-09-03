@@ -1,8 +1,8 @@
 FROM ubuntu:22.10
 
 LABEL maintainer="luistavares10@outlook.pt"
-LABEL description="Ubuntu 20.10 image ready to execute automatic AOCO sub-routine code correction tool"
-LABEL version="1.0"
+LABEL description="ARM64 and RISC-V (extensible) assessment system"
+LABEL version="0.0.1"
 
 SHELL ["/bin/bash", "-c"]
 
