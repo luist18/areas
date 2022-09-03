@@ -63,7 +63,7 @@ To develop the tool you must setup a Docker development environment to ease the 
 
 1. Place the input files inside any directory.
 2. Run the image with a shared volume pointing to the input directory: `docker run -v input:destination -it luist188/areas` (you can learn more about `docker run` usage [here](https://docs.docker.com/engine/reference/run/))
-3. Run the alias command (assure you are using `/bin/bash`) `mast` or run `python main.py` in the tool's source.
+3. Run the alias command (assure you are using `/bin/bash`) `areas` or run `python main.py` in the tool's source.
 
 ## 4. Usage
 
