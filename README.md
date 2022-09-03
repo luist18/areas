@@ -1,12 +1,12 @@
-# mast-tool<!-- omit in toc -->
+# areas<!-- omit in toc -->
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/luist18/mast-tool/Deploy%20Docker%20image?logo=github)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/luist188/mast-tool?logo=docker)
 [![GitHub license](https://img.shields.io/github/license/luist18/mast-tool?color=blue)](https://github.com/luist18/mast-tool/blob/main/LICENSE)
 
-Microprocessors and Personal Computers ARM subroutine tester tool.
+**A**RM64 and **R**ISC-V (**e**xtensible) **A**ssessment **S**ystem.
 
-The MAST tool is originally a fork from [João Damas'](https://github.com/cyrilico) [Automatic Observation and (grade) Calculation for (subroutine) Operations tool](https://github.com/cyrilico/aoco-code-correction). It is a tool to automate student's grading in the assignments done during the Microprocessor and Personal Computers course unit.
+*areas* is originally a fork from [João Damas'](https://github.com/cyrilico) [Automatic Observation and (grade) Calculation for (subroutine) Operations tool](https://github.com/cyrilico/aoco-code-correction). It is a tool to automate student's grading in the assignments done during the Microprocessor and Personal Computers course unit.
 
 ## Differences with the original tool<!-- omit in toc -->
 
@@ -34,23 +34,23 @@ To ease the communication between the backend server and the tool the output dem
 Using Docker:
 
 ```bash
-docker pull luist188/mast-tool
+docker pull luist188/areas
 ```
 
-## 2. Developing 
+## 2. Developing
 
 To develop the tool you must setup a Docker development environment to ease the dependencies installation and setup an isolated environment.
 
 1. Build the Docker development image:
 
    ```bash
-   docker build -f Dockerfile.dev -t arm_tester_dev .
+   docker build -f Dockerfile.dev -t areas .
    ```
 
 2. Run the image with the shared folder:
 
    ```bash
-   docker run -it -v $(pwd):/usr/app arm_tester_dev
+   docker run -it -v $(pwd):/usr/app areas
    ```
 
 3. Open the virtual env:
@@ -62,15 +62,15 @@ To develop the tool you must setup a Docker development environment to ease the 
 ## 3. Running
 
 1. Place the input files inside any directory.
-2. Run the image with a shared volume pointing to the input directory: `docker run -v input:destination -it luist188/mast-tool` (you can learn more about `docker run` usage [here](https://docs.docker.com/engine/reference/run/))
+2. Run the image with a shared volume pointing to the input directory: `docker run -v input:destination -it luist188/areas` (you can learn more about `docker run` usage [here](https://docs.docker.com/engine/reference/run/))
 3. Run the alias command (assure you are using `/bin/bash`) `mast` or run `python main.py` in the tool's source.
 
 ## 4. Usage
 
 ```console
-$ mast [-h] -sr SR -t T -sm SM [SM ...] [-gfd GFD] [-ffd FFD] [-grf GRF] [-tout TOUT] [-fpre FPRE]
+$ areas [-h] -sr SR -t T -sm SM [SM ...] [-gfd GFD] [-ffd FFD] [-grf GRF] [-tout TOUT] [-fpre FPRE]
 
-$ mast [args]
+$ areas [args]
 
 Options:
   --help, -h                Show help                                         [boolean]
@@ -128,6 +128,26 @@ bar:
   return: 
     - long
 ```
+
+Each subroutine has an optional parameter to define the subroutine architecture, the syntax is as follows:
+
+```yaml
+foo: 
+  architecture: arm
+  params: 
+    - int
+    - array char
+    - array int
+    - array int
+  return: 
+    - int
+    - array int
+```
+
+By default, if the architecture parameter is omitted, the system will assume ARM64 as the subroutine architecture. The available architectures are the following:
+
+- `arm` - ARM64 architecture
+- `riscv` - RISC-V architecture
 
 The subroutine name has to match the `.s` to test and is case insensitive. Thus, the subroutine `foo` or `bar` is going to check any `.s` file that matches its name case insensitive. All subroutines must contain an array of parameters, `params`, and an array of returns, `return`.
 
