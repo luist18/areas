@@ -31,4 +31,3 @@ RUN echo 'alias areas="python3 /areas/main.py"' >> ~/.bashrc
 
 # Default command
 CMD ["/bin/bash"]
-
