@@ -53,12 +53,6 @@ To develop the tool you must setup a Docker development environment to ease the 
    docker run -it -v $(pwd):/usr/app areas
    ```
 
-3. Open the virtual env:
-
-    ```bash
-    . .venv/bin/activate
-    ```
-
 ## 3. Running
 
 1. Place the input files inside any directory.
