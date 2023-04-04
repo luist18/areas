@@ -19,6 +19,7 @@ RUN apt-get update
 
 # Install
 RUN sh /requirements/system_requirements.sh
+RUN sh /requirements/riscv32.sh
 
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
@@ -26,8 +27,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${PATH}:/root/.local/share/pypoetry/venv/bin"
 
 RUN poetry install
-
-RUN echo 'alias areas="python3 /areas/main.py"' >> ~/.bashrc
 
 # Default command
 CMD ["/bin/bash"]
