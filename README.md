@@ -1,7 +1,5 @@
 # areas<!-- omit in toc -->
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/luist18/areas/Deploy%20Docker%20image?logo=github)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/luist188/areas?logo=docker)
 [![GitHub license](https://img.shields.io/github/license/luist18/areas?color=blue)](https://github.com/luist18/areas/blob/main/LICENSE)
 
 **A**RM64 and **R**ISC-V (**e**xtensible) **A**ssessment **S**ystem.

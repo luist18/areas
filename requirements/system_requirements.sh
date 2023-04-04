@@ -10,3 +10,6 @@ apt install -y gcc-aarch64-linux-gnu qemu-user-static
 
 # risc-v compiler
 apt install -y gcc-riscv64-linux-gnu
+
+# risc-v compiler 32 bit
+apt install -y gcc-riscv32-linux-gnu
