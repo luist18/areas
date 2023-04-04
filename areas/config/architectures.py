@@ -4,6 +4,10 @@ ARCHITECTURES = {
         'emulator': 'qemu-aarch64-static',
     },
     'riscv': {
+        'compiler': 'riscv32-linux-gnu-gcc',
+        'emulator': 'qemu-riscv32-static',
+    },
+    'riscv64': {
         'compiler': 'riscv64-linux-gnu-gcc',
         'emulator': 'qemu-riscv64-static',
     }
