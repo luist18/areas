@@ -19,7 +19,7 @@ RUN apt-get update
 
 # Install
 RUN sh /requirements/system_requirements.sh
-RUN sh /requirements/riscv32.sh
+RUN sh /requirements/riscv32-prebuilt.sh
 
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
