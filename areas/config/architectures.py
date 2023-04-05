@@ -4,7 +4,7 @@ ARCHITECTURES = {
         'emulator': 'qemu-aarch64-static',
     },
     'riscv': {
-        'compiler': 'riscv32-unknown-elf-gc',
+        'compiler': 'riscv32-unknown-linux-gnu-gcc',
         'emulator': 'qemu-riscv32-static',
     },
     'riscv64': {

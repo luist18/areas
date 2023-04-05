@@ -51,6 +51,8 @@ To develop the tool you must setup a Docker development environment to ease the 
    docker run -it -v $(pwd):/usr/app areas
    ```
 
+Note: if you are running MacOS with the M1 (or superior) chip you must add `--platform linux/x86_64` to `docker build` and `docker run`.
+
 ## 3. Running
 
 1. Place the input files inside any directory.

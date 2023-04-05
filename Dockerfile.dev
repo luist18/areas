@@ -15,7 +15,9 @@ COPY requirements /requirements
 COPY ./ /usr/app
 
 # Ensure packages are up to date
-RUN apt-get update
+RUN apt-get update \
+    && apt-get install -y wget \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install
 RUN sh /requirements/system_requirements.sh
@@ -24,7 +26,7 @@ RUN sh /requirements/riscv32-prebuilt.sh
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-ENV PATH="${PATH}:/root/.local/share/pypoetry/venv/bin"
+ENV PATH="${PATH}:/root/.local/share/pypoetry/venv/bin:/opt/riscv/bin"
 
 RUN poetry config virtualenvs.create false
 
