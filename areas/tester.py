@@ -10,6 +10,7 @@ import unidecode
 
 from areas.config.architectures import ARCHITECTURES
 from areas.exception import *
+from areas.util.parse_errors import parse_compilation_errors
 
 
 class Tester:
@@ -250,6 +251,14 @@ class Tester:
 
             if not compiled:
                 subroutine_object['compile_output'] = compile_output
+
+                compilation_warnings, compilation_errors = parse_compilation_errors(
+                    compile_output)
+
+                subroutine_object['compilation_errors'] = {
+                    'warnings': compilation_warnings,
+                    'errors': compilation_errors
+                }
 
             subroutine_object['ok'] = compiled and all_tests_passed
             subroutine_object['passed_count'] = passed
