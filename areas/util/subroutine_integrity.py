@@ -20,21 +20,21 @@ AVAILABLE_TYPES = [
 ]
 
 PYTHON_COMPATIBLE_TYPES = {
-    "int": int,
-    "long": int,
-    "float": float,
-    "double": float,
-    "char": str,
-    "chari": int,
+    "int": [int],
+    "long": [int],
+    "float": [int, float],
+    "double": [int, float],
+    "char": [str],
+    "chari": [int],
     # arrays
-    "char*": str,
-    "string": str,
-    "array int": list,
-    "array long": list,
-    "array float": list,
-    "array double": list,
-    "array char": list,
-    "array chari": list
+    "char*": [str],
+    "string": [str],
+    "array int": [list],
+    "array long": [list],
+    "array float": [list],
+    "array double": [list],
+    "array char": [list],
+    "array chari": [list]
 }
 
 
@@ -73,18 +73,24 @@ def __parse_test(inputs, outputs, params, returns):
             "Number of outputs does not match number of returns")
 
     for param, input in zip(params, inputs):
-        expected_type = PYTHON_COMPATIBLE_TYPES[param]
+        expected_types = PYTHON_COMPATIBLE_TYPES[param]
 
-        if not isinstance(input, expected_type):
+        matches = [isinstance(input, expected_type)
+                   for expected_type in expected_types]
+
+        if not any(matches):
             raise ToolFileError(
-                f"Input {input} is not of type {expected_type}")
+                f"Input {input} ({type(output)}) is not of type {expected_types}")
 
     for return_type, output in zip(returns, outputs):
-        expected_type = PYTHON_COMPATIBLE_TYPES[return_type]
+        expected_types = PYTHON_COMPATIBLE_TYPES[return_type]
 
-        if not isinstance(output, expected_type):
+        matches = [isinstance(output, expected_type)
+                   for expected_type in expected_types]
+
+        if not any(matches):
             raise ToolFileError(
-                f"Output {output} is not of type {expected_type}")
+                f"Output {output} ({type(output)}) is not of type {expected_types}")
 
 
 def __parse_subroutine_tests(tests, params, returns):

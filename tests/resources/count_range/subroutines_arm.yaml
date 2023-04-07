@@ -1,0 +1,9 @@
+count_range:
+  architecture: arm
+  params:
+    - array float
+    - int
+    - float
+    - float
+  return:
+    - int

@@ -90,7 +90,7 @@ class Tester:
 
         # Build C file from template
         open('{}.c'.format(output_file), 'w').write(
-            template_file.format(*[param.get_literal_representantion(inp_literal) for param, inp_literal in sorted_param_list]))
+            template_file.format(*[param.get_literal_representation(inp_literal) for param, inp_literal in sorted_param_list]))
 
         compilation_files = list(
             map(lambda x: "{}/{}.s".format(self.temp_grading_folder, x.lower()),

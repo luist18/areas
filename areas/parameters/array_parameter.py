@@ -29,9 +29,9 @@ class ArrayParameter(Parameter):
     def get_test_call_representation(self):
         return 'arg{}'.format(self.idx) if self.is_output else '({}[]){{{{ {{}} }}}}'.format(self.element_type)
 
-    def get_literal_representantion(self, value):
+    def get_literal_representation(self, value):
         return ','.join(map(str, value)) if (self.element_type != 'char'
-                                             and self.element_type != 'chari') else','.join(map(lambda x: str(x) if isinstance(x, int) else "'{}'".format(x), value))
+                                             and self.element_type != 'chari') else ','.join(map(lambda x: str(x) if isinstance(x, int) else "'{}'".format(x), value))
 
     def get_test_call_output_representation(self):
         var_name = 'arg{}'.format(self.idx)

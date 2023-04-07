@@ -17,7 +17,7 @@ class StringParameter(Parameter):
     def get_test_call_representation(self):
         return 'arg{}'.format(self.idx) if self.is_output else '"{}"'
 
-    def get_literal_representantion(self, value):
+    def get_literal_representation(self, value):
         return value
 
     def get_test_call_output_representation(self):

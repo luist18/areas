@@ -18,7 +18,7 @@ class NumericParameter(Parameter):
     def get_test_call_representation(self):
         return '{}'
 
-    def get_literal_representantion(self, value):
+    def get_literal_representation(self, value):
         return str(value)
 
     def get_test_call_output_representation(self):

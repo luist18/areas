@@ -18,7 +18,7 @@ class Parameter:
         """Method that returns parameter's representation as an actual argument to a subroutine call (may be direct value or variable, where value is not used)"""
         pass
 
-    def get_literal_representantion(self, value):
+    def get_literal_representation(self, value):
         """Method that returns parameter's representation for when to format an input into a template C file"""
         pass
 
