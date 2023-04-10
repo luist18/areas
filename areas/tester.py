@@ -56,10 +56,10 @@ class Tester:
         try:
             with open('{}/{}.s'.format(self.temp_grading_folder, subroutine.lower()), mode='rb') as f:
                 calls = list(filter(lambda x: x is not None, map(lambda y: search(
-                    rb'bl\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
+                    rb'(bl|call)\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
 
                 calls = set(map(lambda x: x.group(
-                    1).lower().decode('utf-8'), calls))
+                    2).lower().decode('utf-8'), calls))
 
                 return [sr for sr in calls if os.path.exists('{}/{}.s'.format(self.temp_grading_folder, sr))]
         except FileNotFoundError:
@@ -203,6 +203,7 @@ class Tester:
 
             tests_list = []
 
+            # multiplicate values by 1000000 to avoid floating point errors
             score = 0
 
             for inp, out, weight in zip(inputs, outputs, weights):
@@ -239,7 +240,7 @@ class Tester:
                 if test_passed:
                     passed = passed + 1
 
-                    score = score + int(Decimal(weight) * 1000000)
+                    score = score + int(float(weight) * 1000000)
                 else:
                     all_tests_passed = False
 
@@ -263,7 +264,7 @@ class Tester:
             subroutine_object['ok'] = compiled and all_tests_passed
             subroutine_object['passed_count'] = passed
             subroutine_object['test_count'] = len(outputs)
-            subroutine_object['score'] = float(Decimal(score) / 1000000)
+            subroutine_object['score'] = float(score / 1000000)
             subroutine_object['tests'] = tests_list
 
             subroutine_list.append(subroutine_object)
