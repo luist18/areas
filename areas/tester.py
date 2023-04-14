@@ -58,6 +58,12 @@ class Tester:
                 calls = list(filter(lambda x: x is not None, map(lambda y: search(
                     rb'(bl|call)\s+([\w\-\_]+)', y.strip(), flags=IGNORECASE), f.readlines())))
 
+                # risc-v calls
+                riscv_calls = list(filter(lambda x: x is not None, map(lambda y: search(
+                    rb'jalr?\s+(?:[\w\-\_]+),\s+([\w\-\_]+)(,\s+\d)?', y.strip(), flags=IGNORECASE), f.readlines())))
+
+                calls = calls + riscv_calls
+
                 calls = set(map(lambda x: x.group(
                     2).lower().decode('utf-8'), calls))
 

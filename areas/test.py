@@ -17,7 +17,7 @@ class Test:
 
     def __init__(self, submission_file, subroutine_file=None, tests_file=None,
                  subroutines=None, test_suite=None,
-                 timeout=1.0, float_threshold=1e-6, save_to_file=False):
+                 timeout=1, float_threshold=1e-6, save_to_file=False):
         self.submission_file = submission_file
         self.subroutine_file = subroutine_file
         self.tests_file = tests_file

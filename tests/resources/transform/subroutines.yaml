@@ -1,0 +1,7 @@
+transform:
+  architecture: riscv
+  params:
+    - int
+    - array chari
+  return:
+    - array chari

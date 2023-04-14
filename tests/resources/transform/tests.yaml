@@ -1,0 +1,13 @@
+transform:
+  - inputs:
+    - 2
+    - [3, 1]
+    outputs:
+    - [3, 1]
+    weight: 0.3
+  - inputs:
+    - 8
+    - [3, 0, 3, 15, 1, 210, 32, 25]
+    outputs:
+    - [3, 2, 6, 6, 75, 81, 89, 25]
+    weight: 0.7

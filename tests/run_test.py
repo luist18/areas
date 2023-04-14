@@ -11,7 +11,11 @@ class TestRun(TestCase):
 
         test = Test(submission_path, subroutine_path, tests_path)
 
-        # test.run()
+        result = test.run()
+
+        score = result['subroutines'][0]['score']
+
+        self.assertAlmostEqual(score, 1.0)
 
     def test_riscv_json(self):
         pass
