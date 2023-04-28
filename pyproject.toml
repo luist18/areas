@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "areas"
-version = "0.1.8"
+version = "0.1.9"
 description = "ARM64 and RISC-V (extensible) assessment system"
 authors = ["Luis Tavares <luistavares10@outlook.pt>"]
 repository = "https://github.com/luist18/areasear"
