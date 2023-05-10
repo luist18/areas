@@ -1,0 +1,8 @@
+afunc:
+  architecture: riscv
+  params:
+    - array float
+    - int
+    - array float
+  return:
+    - array float
