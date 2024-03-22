@@ -16,6 +16,8 @@ class NumericParameter(Parameter):
         return ''
 
     def get_test_call_representation(self):
+        if self.num_type == "char":
+            return '\'{}\''
         return '{}'
 
     def get_literal_representation(self, value):
