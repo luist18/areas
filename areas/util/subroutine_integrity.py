@@ -80,7 +80,7 @@ def __parse_test(inputs, outputs, params, returns):
 
         if not any(matches):
             raise ToolFileError(
-                f"Input {input} ({type(output)}) is not of type {expected_types}")
+                f"Input {input} ({type(input)}) is not of type {expected_types}")
 
     for return_type, output in zip(returns, outputs):
         expected_types = PYTHON_COMPATIBLE_TYPES[return_type]
