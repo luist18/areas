@@ -1,0 +1,10 @@
+filtrar:
+  architecture: riscv
+  params:
+    - chari
+    - chari
+    - int
+    - array chari
+  return:
+    - int
+    - array chari
