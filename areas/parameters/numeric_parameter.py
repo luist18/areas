@@ -9,7 +9,8 @@ class NumericParameter(Parameter):
         self.num_type = num_type
 
     def get_prototype_representation(self):
-        return '{} arg{}'.format(self.num_type, self.idx)
+        proto = self.num_type if self.num_type != 'chari' else 'char'
+        return '{} arg{}'.format(proto, self.idx)
 
     def get_test_declaration_representation(self):
         # Not applicable to numeric parameters (they're always only input)
